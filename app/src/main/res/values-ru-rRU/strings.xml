@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">3x crypto</string>
+    <string name="password">Пароль</string>
+    <string name="go">Поехали!</string>
+    <string name="password_hint">Введите пароль сюда</string>
+    <string name="encode">Зашифровать</string>
+    <string name="decode">Расшифровать</string>
+    <string name="download">Скачать</string>
+    <string name="file_is_not_chosen">"Файл не выбран "</string>
+    <string name="file_is_chosen">Файл выбран ✅</string>
+    <string name="warning">Внимание!</string>
+    <string name="not_correct_version">Это приложение работает на 10 (и следующих) версии Андроид. Работа на версиях ниже 10 не гарантирована!</string>
+    <string name="error">Ошибка!</string>
+    <string name="error_text">Что-то пошло не так</string>
+    <string name="ok">ОК</string>
+    <string name="choose_file">Выберите файл</string>
+    <string name="write_new_name_for_file">Введите новое имя файла</string>
+</resources>

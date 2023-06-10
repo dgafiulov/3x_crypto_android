@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">My_3x_crypto</string>
+    <string name="app_name">3x crypto</string>
+    <string name="password">Password</string>
+    <string name="go">Go!</string>
+    <string name="password_hint">Enter password for your file</string>
+    <string name="tv_you_have_chosen" translatable="false">tv_you_have_chosen</string>
+    <string name="encode">Encode</string>
+    <string name="decode">Decode</string>
+    <string name="download">Download</string>
+    <string name="file_is_not_chosen">"File is not chosen "</string>
+    <string name="file_is_chosen">"File is chosen "</string>
+    <string name="warning">Warning!</string>
+    <string name="not_correct_version">"This app works with Android 10 and higher. Work with versions under 10 is not guaranteed!"</string>
+    <string name="error">Error!</string>
+    <string name="error_text">Something went wrong</string>
+    <string name="ok">OK</string>
+    <string name="choose_file">Choose file</string>
+    <string name="write_new_name_for_file">Write new name for file</string>
 </resources>
