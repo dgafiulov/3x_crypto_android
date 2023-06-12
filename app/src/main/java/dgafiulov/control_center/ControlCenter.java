@@ -1,50 +1,57 @@
 package dgafiulov.control_center;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.READ_MEDIA_AUDIO;
+import static android.Manifest.permission.READ_MEDIA_IMAGES;
+import static android.Manifest.permission.READ_MEDIA_VIDEO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageManager;
 import android.view.View;
 
-import dgafiulov.app_start.AppStart;
-import dgafiulov.file_getter.FileGetter;
+import androidx.core.app.ActivityCompat;
+
 import dgafiulov.ui.databinding.ActivityMainBinding;
-import dgafiulov.worker_files.FileWorker;
+import dgafiulov.worker_files.FileGetter;
 
 public class ControlCenter {
 
-    private Uri fileUri;
-    private ActivityMainBinding binding;
-    private final int chooseFileCode = 1;
-    private final int saveFileCode = 2;
-    private int sdkVersion = new AppStart().getSdkVersion();
-    private final FileGetter fileGetter = new FileGetter();
-    private final FileWorker fileWorker = new FileWorker();
-    private final ResultsOfUIGetter resultsOfUIGetter = new ResultsOfUIGetter(binding);
+    ActivityMainBinding binding;
+    FileGetter fileGetter;
+    private final ButtonControl buttonControl;
+    private Activity mainActivity;
 
-    public ControlCenter(ActivityMainBinding binding) {
+    public ControlCenter(ActivityMainBinding binding, Activity mainActivity) {
         this.binding = binding;
+        this.mainActivity = mainActivity;
+        this.fileGetter = new FileGetter(binding);
+        buttonControl = new ButtonControl(binding, mainActivity);
+        mainInit();
     }
+
     public void getFile(int requestCode, int resultCode, Intent data, Context context) {
-        if (requestCode == chooseFileCode) {
-            fileUri = fileGetter.fileGet(resultCode, data, context);
-        } else if (requestCode == saveFileCode) {
-            try {
-                fileWorker.initSaver((resultsOfUIGetter.getSwitchResult() ? 0 : 1), fileUri, resultsOfUIGetter.getPasswordFromEditText(), context, fileGetter.fileGet(resultCode, data, context));
-                Thread saveThread = new Thread(fileWorker);
-                saveThread.start();
-            } catch (Exception e) {
-                //workWithDialogs.getErrorDialog(context).show();
-            }
-        }
+        fileGetter.getFile(requestCode, resultCode, data, context);
     }
 
     public Intent getIntentForFileChooser(View view) {
-        Intent intent = fileGetter.openFileChooserIntent(view);
-        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        return intent;
+        return fileGetter.getIntentForFileChooser(view);
     }
 
     public int getChooseFileCode() {
-        return chooseFileCode;
+        return fileGetter.getChooseFileCode();
+    }
+
+    private void getUserPermissions() {
+        ActivityCompat.requestPermissions(mainActivity,
+                new String[]{READ_MEDIA_IMAGES, READ_MEDIA_VIDEO, READ_MEDIA_AUDIO, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE},
+                PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void mainInit() {
+        getUserPermissions();
+        buttonControl.setOnClickListenersForAllButtons();
     }
 }

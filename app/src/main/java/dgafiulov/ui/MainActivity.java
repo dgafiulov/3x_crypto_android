@@ -2,7 +2,6 @@ package dgafiulov.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,12 +17,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(binding.getRoot());
+        bindingInit();
         controlCenterInit();
     }
 
+    private void bindingInit() {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+    }
     private void controlCenterInit() {
-        controlCenter = new ControlCenter(binding);
+        controlCenter = new ControlCenter(binding, MainActivity.this);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -31,7 +34,4 @@ public class MainActivity extends AppCompatActivity {
         controlCenter.getFile(requestCode, resultCode, data, this);
     }
 
-    public void openFileChooser(View view) {
-        startActivityForResult(controlCenter.getIntentForFileChooser(view), controlCenter.getChooseFileCode());
-    }
 }

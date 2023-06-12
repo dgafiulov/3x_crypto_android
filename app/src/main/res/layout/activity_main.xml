@@ -6,11 +6,99 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/bt_choose_file"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/choose_file"
+        app:layout_constraintBottom_toTopOf="@+id/et_password_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChosenNotChosen"
+        app:layout_constraintWidth="200dp"
+        tools:ignore="TextSizeCheck" />
+
+    <EditText
+        android:id="@+id/et_password_input"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:autofillHints="Password"
+        android:hint="@string/password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_choose_file"
+        app:layout_constraintWidth="200dp"
+        tools:ignore="TextSizeCheck"></EditText>
+
+    <Button
+        android:id="@+id/bt_start"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/go"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swChoose"
+        tools:ignore="TextSizeCheck" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/swChoose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:height="50dp"
+        app:thumbTint="@drawable/thump"
+        app:trackTint="@drawable/track"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_input"
+        tools:ignore="UseSwitchCompatOrMaterialXml">
+    </androidx.appcompat.widget.SwitchCompat>
+
+    <TextView
+        android:id="@+id/encodeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:height="50dp"
+        android:gravity="center"
+        android:text="@string/encode"
+        app:layout_constraintEnd_toStartOf="@+id/swChoose"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_input"
+        tools:ignore="TextSizeCheck" />
+
+    <TextView
+        android:id="@+id/decodeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:height="50dp"
+        android:gravity="center"
+        android:text="@string/decode"
+        app:layout_constraintStart_toEndOf="@+id/swChoose"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_input"
+        tools:ignore="TextSizeCheck" />
+
+    <TextView
+        android:id="@+id/resultTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextSizeCheck"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvChosenNotChosen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="@string/file_is_not_chosen"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -11,12 +11,10 @@ public class ResultsOfUIGetter {
     }
 
     public boolean getSwitchResult() {
-
-        return false;
+        return binding.swChoose.isChecked();
     }
 
     public String getPasswordFromEditText() {
-
-        return "";
+        return binding.etPasswordInput.getText().toString();
     }
 }
