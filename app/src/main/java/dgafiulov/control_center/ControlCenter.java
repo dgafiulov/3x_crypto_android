@@ -10,25 +10,32 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.view.View;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
+import dgafiulov.app_start.AppStart;
 import dgafiulov.ui.databinding.ActivityMainBinding;
 import dgafiulov.worker_files.FileGetter;
+import dgafiulov.worker_files.FileWorker;
 
 public class ControlCenter {
 
-    ActivityMainBinding binding;
-    FileGetter fileGetter;
-    private final ButtonControl buttonControl;
-    private Activity mainActivity;
+    private final ActivityMainBinding binding;
+    private FileGetter fileGetter;
+    private ButtonControl buttonControl;
+    private final Activity mainActivity;
+    private ResultsOfUIGetter resultsOfUIGetter;
+    private FileWorker fileWorker;
+    private Context context;
+    private int sdkVersion = new AppStart().getSdkVersion();
+    private final int chooseFileCode = 1;
+    private final int saveFileCode = 2;
 
-    public ControlCenter(ActivityMainBinding binding, Activity mainActivity) {
+    public ControlCenter(ActivityMainBinding binding, Activity mainActivity, Context context) {
         this.binding = binding;
         this.mainActivity = mainActivity;
-        this.fileGetter = new FileGetter(binding);
-        buttonControl = new ButtonControl(binding, mainActivity);
+        this.context = context;
         mainInit();
     }
 
@@ -36,12 +43,12 @@ public class ControlCenter {
         fileGetter.getFile(requestCode, resultCode, data, context);
     }
 
-    public Intent getIntentForFileChooser(View view) {
-        return fileGetter.getIntentForFileChooser(view);
+    public int getChooseFileCode() {
+        return chooseFileCode;
     }
 
-    public int getChooseFileCode() {
-        return fileGetter.getChooseFileCode();
+    public int getSaveFileCode() {
+        return saveFileCode;
     }
 
     private void getUserPermissions() {
@@ -51,7 +58,26 @@ public class ControlCenter {
     }
 
     private void mainInit() {
+        fileWorker = new FileWorker();
+        fileGetter = new FileGetter(binding, this);
+        resultsOfUIGetter = new ResultsOfUIGetter(binding);
+        buttonControl = new ButtonControl(binding, mainActivity, this, resultsOfUIGetter, sdkVersion);
         getUserPermissions();
         buttonControl.setOnClickListenersForAllButtons();
+    }
+
+    public FileGetter getFileGetter() {
+        return fileGetter;
+    }
+
+    public void changeAndSaveFile(int resultCode, Intent data) {
+        try {
+            fileWorker.initSaver((resultsOfUIGetter.getSwitchResult() ? 0 : 1), fileGetter.getFileUri(), resultsOfUIGetter.getPasswordFromEditText(), context, fileGetter.fileGet(resultCode, data, context));
+            Thread saveThread = new Thread(fileWorker);
+            Log.i(String.valueOf(Log.INFO), "saveThread");
+            saveThread.start();
+        } catch (Exception e) {
+            //workWithDialogs.getErrorDialog(MainActivity.this).show();
+        }
     }
 }

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
-import dgafiulov.app_start.AppStart;
+import dgafiulov.control_center.ControlCenter;
 import dgafiulov.control_center.ResultsOfUIGetter;
 import dgafiulov.ui.databinding.ActivityMainBinding;
 
@@ -15,20 +15,19 @@ public class FileGetter {
 
     private Uri fileUri;
     private ActivityMainBinding binding;
-    private final int chooseFileCode = 1;
-    private final int saveFileCode = 2;
-    private int sdkVersion = new AppStart().getSdkVersion();
     private final FileWorker fileWorker = new FileWorker();
     private final ResultsOfUIGetter resultsOfUIGetter = new ResultsOfUIGetter(binding);
+    private ControlCenter controlCenter;
 
-    public FileGetter(ActivityMainBinding binding) {
+    public FileGetter(ActivityMainBinding binding, ControlCenter controlCenter) {
         this.binding = binding;
+        this.controlCenter = controlCenter;
     }
 
     public void getFile(int requestCode, int resultCode, Intent data, Context context) {
-        if (requestCode == chooseFileCode) {
+        if (requestCode == controlCenter.getChooseFileCode()) {
             fileUri = fileGet(resultCode, data, context);
-        } else if (requestCode == saveFileCode) {
+        } else if (requestCode == controlCenter.getSaveFileCode()) {
             try {
                 fileWorker.initSaver((resultsOfUIGetter.getSwitchResult() ? 0 : 1), fileUri, resultsOfUIGetter.getPasswordFromEditText(), context, fileGet(resultCode, data, context));
                 Thread saveThread = new Thread(fileWorker);
@@ -45,10 +44,6 @@ public class FileGetter {
         return intent;
     }
 
-    public int getChooseFileCode() {
-        return chooseFileCode;
-    }
-
     public Uri fileGet(int resultCode, Intent data, Context context) {
         if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
@@ -60,10 +55,20 @@ public class FileGetter {
     }
 
     public Intent openFileChooserIntent(View view) {
-        Log.i(String.valueOf(Log.INFO), "click1");
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
-        Log.i(String.valueOf(Log.INFO), "click2");
         return intent;
+    }
+
+    public Uri getFileUri() {
+        return fileUri;
+    }
+
+    public void intentForFileSave(Activity mainActivity) {
+        Log.i(String.valueOf(Log.INFO), "intent for file save");
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        mainActivity.startActivityForResult(intent, 2);
     }
 }
