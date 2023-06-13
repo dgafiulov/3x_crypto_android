@@ -28,6 +28,8 @@ public class FileWorker implements Runnable{
     FileReader fileReader = new FileReader();
     FileWriter fileWriter = new FileWriter();
 
+    private boolean avaibleToSend = false;
+
     @Override
     public void run() {
         if (isInitialized) {
@@ -136,6 +138,7 @@ public class FileWorker implements Runnable{
             fileWriter.writeInFile(buffer);
         }
         fileWriter.writerDestruct();
+        avaibleToSend = true;
     }
 
     private void encodeAndWriteInOldVersions() throws IOException {
@@ -158,6 +161,7 @@ public class FileWorker implements Runnable{
             fileWriter.writeInFileInOldVersions(buffer);
         }
         fileWriter.writerInOldVersionsDestruct();
+        avaibleToSend = true;
     }
 
     private void decodeAndWrite() throws IOException{
@@ -190,6 +194,7 @@ public class FileWorker implements Runnable{
         }
 
         fileWriter.writerDestruct();
+        avaibleToSend = true;
     }
 
     private void decodeAndWriteInOldVersions() throws IOException{
@@ -220,5 +225,14 @@ public class FileWorker implements Runnable{
         }
 
         fileWriter.writerInOldVersionsDestruct();
+        avaibleToSend = true;
+    }
+
+    public boolean isAvaibleToSend() {
+        return avaibleToSend;
+    }
+
+    public Uri getUri() {
+        return newFile;
     }
 }

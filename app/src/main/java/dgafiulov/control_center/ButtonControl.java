@@ -1,6 +1,7 @@
 package dgafiulov.control_center;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
 import dgafiulov.ui.WorkWithDialogs;
@@ -29,6 +30,7 @@ public class ButtonControl {
     public void setOnClickListenersForAllButtons() {
         btChooseFileSetOnClickListener();
         btStartSetOnClickListener();
+        btSendSetOnClickListener();
     }
 
     private void btChooseFileSetOnClickListener() {
@@ -54,6 +56,21 @@ public class ButtonControl {
                     } else {
                         workWithDialogs.getAskForNewNameDialog(mainActivity, controlCenter.getFileWorker(), resultsOfUIGetter.getSwitchResult(), fileGetter.getFileUri(), resultsOfUIGetter.getPasswordFromEditText()).show();
                     }
+                }
+            }
+        });
+    }
+
+    private void btSendSetOnClickListener() {
+        binding.btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (controlCenter.getFileWorker().isAvaibleToSend()) {
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, controlCenter.getFileWorker().getUri());
+                    intent.setType("file/*");
+                    mainActivity.startActivity(intent);
                 }
             }
         });
