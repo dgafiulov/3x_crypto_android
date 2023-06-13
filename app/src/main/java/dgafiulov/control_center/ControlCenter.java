@@ -15,6 +15,7 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 
 import dgafiulov.app_start.AppStart;
+import dgafiulov.ui.WorkWithDialogs;
 import dgafiulov.ui.databinding.ActivityMainBinding;
 import dgafiulov.worker_files.FileGetter;
 import dgafiulov.worker_files.FileWorker;
@@ -31,6 +32,7 @@ public class ControlCenter {
     private int sdkVersion = new AppStart().getSdkVersion();
     private final int chooseFileCode = 1;
     private final int saveFileCode = 2;
+    WorkWithDialogs workWithDialogs = new WorkWithDialogs();
 
     public ControlCenter(ActivityMainBinding binding, Activity mainActivity, Context context) {
         this.binding = binding;
@@ -70,6 +72,10 @@ public class ControlCenter {
         return fileGetter;
     }
 
+    public FileWorker getFileWorker() {
+        return fileWorker;
+    }
+
     public void changeAndSaveFile(int resultCode, Intent data) {
         try {
             fileWorker.initSaver((resultsOfUIGetter.getSwitchResult() ? 0 : 1), fileGetter.getFileUri(), resultsOfUIGetter.getPasswordFromEditText(), context, fileGetter.fileGet(resultCode, data, context));
@@ -77,7 +83,7 @@ public class ControlCenter {
             Log.i(String.valueOf(Log.INFO), "saveThread");
             saveThread.start();
         } catch (Exception e) {
-            //workWithDialogs.getErrorDialog(MainActivity.this).show();
+            workWithDialogs.getErrorDialog(mainActivity).show();
         }
     }
 }
