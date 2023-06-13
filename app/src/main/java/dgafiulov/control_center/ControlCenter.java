@@ -15,6 +15,7 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 
 import dgafiulov.app_start.AppStart;
+import dgafiulov.ui.R;
 import dgafiulov.ui.WorkWithDialogs;
 import dgafiulov.ui.databinding.ActivityMainBinding;
 import dgafiulov.worker_files.FileGetter;
@@ -89,5 +90,9 @@ public class ControlCenter {
 
     public int getSdkVersion() {
         return sdkVersion;
+    }
+
+    public void setCorrectText() {
+        binding.tvChosenNotChosen.setText(context.getString(R.string.file_is_chosen));
     }
 }

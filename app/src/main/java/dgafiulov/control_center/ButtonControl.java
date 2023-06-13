@@ -38,6 +38,7 @@ public class ButtonControl {
             @Override
             public void onClick(View view) {
                 mainActivity.startActivityForResult(fileGetter.getIntentForFileChooser(view), controlCenter.getChooseFileCode());
+                controlCenter.setCorrectText();
             }
         });
     }
