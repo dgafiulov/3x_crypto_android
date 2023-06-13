@@ -34,4 +34,13 @@ public class WorkWithDialogs {
         });
         return alertDialog;
     }
+
+    public AlertDialog getErrorSendDialog(Context context) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.setTitle(R.string.error);
+        String error = context.getString(R.string.error_send);
+        alertDialog.setMessage(error);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, String.valueOf("OK"), (dialogInterface, i) -> dialogInterface.dismiss());
+        return alertDialog;
+    }
 }

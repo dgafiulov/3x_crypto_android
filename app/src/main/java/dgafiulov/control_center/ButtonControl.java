@@ -65,12 +65,16 @@ public class ButtonControl {
         binding.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (controlCenter.getFileWorker().isAvaibleToSend()) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setAction(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_STREAM, controlCenter.getFileWorker().getUri());
-                    intent.setType("file/*");
-                    mainActivity.startActivity(intent);
+                if (controlCenter.getSdkVersion() < 30) {
+                    workWithDialogs.getErrorSendDialog(mainActivity).show();
+                } else {
+                    if (controlCenter.getFileWorker().isAvaibleToSend()) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_STREAM, controlCenter.getFileWorker().getUri());
+                        intent.setType("file/*");
+                        mainActivity.startActivity(intent);
+                    }
                 }
             }
         });

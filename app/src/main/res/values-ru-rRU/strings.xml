@@ -16,4 +16,5 @@
     <string name="ok">ОК</string>
     <string name="choose_file">Выберите файл</string>
     <string name="write_new_name_for_file">Введите новое имя файла</string>
+    <string name="error_send">Извините, эта функция работает только в Андроид 10 и новее</string>
 </resources>

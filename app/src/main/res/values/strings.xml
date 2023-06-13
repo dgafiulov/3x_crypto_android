@@ -16,4 +16,5 @@
     <string name="ok">OK</string>
     <string name="choose_file">Choose file</string>
     <string name="write_new_name_for_file">Write new name for file</string>
+    <string name="error_send">Sorry, this functions is available in android 10 and newer</string>
 </resources>

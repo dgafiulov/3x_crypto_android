@@ -86,4 +86,8 @@ public class ControlCenter {
             workWithDialogs.getErrorDialog(mainActivity).show();
         }
     }
+
+    public int getSdkVersion() {
+        return sdkVersion;
+    }
 }
